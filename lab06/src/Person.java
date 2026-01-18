@@ -6,9 +6,9 @@ public class Person {
     private int age;
 
     public Person(String firstName, String lastName, int age) {
-        this.firstName = (firstName == null || firstName.isEmpty()) ? "" : firstName;
-        this.lastName = (lastName == null || lastName.isEmpty()) ? "" : lastName;
-        this.age = (age <= 0) ? 0 : age;
+        this.firstName = (firstName != null && !firstName.isEmpty()) ? firstName : "";
+        this.lastName = (lastName != null && !lastName.isEmpty()) ? lastName : "";
+        this.age = Math.max(age, 0);
     }
 
     @Override
@@ -21,21 +21,13 @@ public class Person {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Person person = (Person) o;
-        return age == person.age && Objects.equals(firstName, person.firstName) && Objects.equals(lastName, person.lastName);
+        return age == person.age &&
+                Objects.equals(firstName, person.firstName) &&
+                Objects.equals(lastName, person.lastName);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(firstName, lastName, age);
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-    public String getLastName() {
-        return lastName;
-    }
-    public int getAge() {
-        return age;
     }
 }
